@@ -15,7 +15,11 @@ const GraphBody = (props) => {
 }
 
 class Graph extends Component {
-
+    render () {
+        return(
+            <GraphHeader />
+        )
+    }
 }
 
 export default Graph
