@@ -4,8 +4,6 @@ import Container from './components/Container'
 import Prop from './components/Prop'
 import './Graph.css'
 
-import { convert_to_tree, Tree } from '../Logic/Tree'
-
 const GraphHeader = () => {
     return (
         <thread>
@@ -19,8 +17,8 @@ const GraphHeader = () => {
 class Graph extends Component {
     render() {
         const { tree, handleSelect, traversal } = this.props
-        console.log("tree = ", tree)
-        console.log("traversal = ", traversal)
+        //console.log("tree = ", tree)
+        //console.log("traversal = ", traversal)
 
         const prop = [
             {
@@ -30,8 +28,17 @@ class Graph extends Component {
                 }
             },
             {
+                text: 'Iteration',
+                onClick: () => {
+                    console.log('Iteration!')
+                    console.log(tree)
+                }
+            },
+            {
                 text: 'Insert Double Cut around',
-                onClick: () => { console.log('Insert Double Cut!') }
+                onClick: () => {
+                    console.log('Insert Double Cut!')
+                }
             },
             {
                 text: "prop",

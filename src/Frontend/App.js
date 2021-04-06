@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Submission from './Submission'
 import Graph from './Graph'
 import parseString from '../Logic/Parser'
-import { convert_to_tree } from '../Logic/Tree'
+import { convert_to_tree, Tree } from '../Logic/Tree'
 
 class App extends Component {
   state = {
