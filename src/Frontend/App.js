@@ -4,14 +4,12 @@ import Submission from './Submission'
 import Graph from './Graph'
 import parseString from '../Logic/Parser'
 import {convert_to_tree} from '../Logic/Tree'
-import {convert_to_flatTree, add_field} from '../Logic/FlatTree'
 
 class App extends Component {
   state = {
     inputFormula : '',
     parsedFormula : '',
     tree : null,
-    flatTree : null,
     selectedFormula : null,
   }
 
@@ -20,7 +18,6 @@ class App extends Component {
     this.setState({inputFormula: formula})
     this.setState({parsedFormula : parseString(formula)})
     this.setState({tree : convert_to_tree(parseString(formula))})
-    this.setState({flatTree : add_field(convert_to_flatTree(convert_to_tree(parseString(formula)), 0, 0))})
   }
 
   render () {

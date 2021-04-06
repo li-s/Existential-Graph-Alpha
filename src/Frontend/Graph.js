@@ -27,34 +27,10 @@ const GraphBody = (props) => {
                     <Graph tree = {tree.subtree[1]} />
                 </Prop>
             )
-        } else if (tree.value == "|") {
-            return  (
-                <Container menuItems={not}>
-                    <Prop menuItems={and}>
-                        <Container menuItems={not}>
-                            <Graph tree = {tree.subtree[0]} />
-                        </Container>
-                        <Container menuItems={not}>
-                            <Graph tree = {tree.subtree[1]} />
-                        </Container>
-                    </Prop>
-                </Container>
-            )
         } else if (tree.value == "~") {
             return (
                 <Container menuItems={not} style={{border: '1px solid black',}}>
                     <Graph tree = {tree.subtree[0]} />
-                </Container>
-            )
-        } else if (tree.value == ">") {
-            return (
-                <Container menuItems={not}>
-                    <Container menuItems={and}>
-                        <Graph tree = {tree.subtree[0]} />
-                        <Container menuItems={not}>
-                            <Graph tree = {tree.subtree[1]} />
-                        </Container>
-                    </Container>
                 </Container>
             )
         } else {
