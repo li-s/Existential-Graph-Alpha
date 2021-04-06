@@ -1,31 +1,36 @@
 import React, {Component} from 'react'
+
 import Submission from './Submission'
 import Graph from './Graph'
 import parseString from '../Logic/Parser'
+import {convert_to_tree} from '../Logic/Tree'
+import {convert_to_flatTree, add_field} from '../Logic/FlatTree'
 
 class App extends Component {
   state = {
     inputFormula : '',
     parsedFormula : '',
-    alphaTree : null,
+    tree : null,
+    flatTree : null,
+    selectedFormula : null,
   }
 
   handleSubmit = (form) => { 
     const{formula} = form
-    const{parsedFormula} = this.state
     this.setState({inputFormula: formula})
     this.setState({parsedFormula : parseString(formula)})
+    this.setState({tree : convert_to_tree(parseString(formula))})
+    this.setState({flatTree : add_field(convert_to_flatTree(convert_to_tree(parseString(formula)), 0, 0))})
   }
 
   render () {
-    const{inputFormula, parsedFormula} = this.state
-    console.log({inputFormula})
+    const{inputFormula, parsedFormula, tree, selectedFormula} = this.state
 
     return (
       <div className="rootPage">        
-        <p>{inputFormula}</p>
-        <p>{parsedFormula}</p>
-        
+        <p>Your input: {inputFormula}</p>
+        <p>Your formula: {parsedFormula}</p>
+        <Graph tree = {tree} />
         <Submission handleSubmit={this.handleSubmit} />
       </div>
     )
