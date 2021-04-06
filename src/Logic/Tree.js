@@ -37,31 +37,44 @@ const convert_to_tree = (str) => {
     } else if (str.toString().includes("|") && index_match("|", str).length > 0) {
         // First get all disjunction outside parenthesis
         const all_conjunctions = index_match("|", str)
-        tree = new Tree("|")
+        tree = new Tree("~")
+        var level1 = new Tree("&")
         // Create sub trees split at the indexes of disjunction we found
         for (var i = 0; i <= all_conjunctions.length; i++) {
             if (i === 0) {
-                tree.subtree.push(convert_to_tree(str.slice(0, all_conjunctions[0])))
+                var level2 = new Tree("~")
+                level2.subtree.push(convert_to_tree(str.slice(0, all_conjunctions[0])))
+                level1.subtree.push(level2)
             } else if (i === all_conjunctions.length) {
-                tree.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, )))
+                var level2 = new Tree("~")
+                level2.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, )))
+                level1.subtree.push(level2)
             } else {
-                tree.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i])))
+                var level2 = new Tree("~")
+                level2.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i])))
+                level1.subtree.push(level2)
             }
         }
+        tree.subtree.push(level1)
     } else if (str.toString().includes(">") && index_match(">", str).length > 0) {
         // First get all implication outside parenthesis
         const all_conjunctions = index_match(">", str)
-        tree = new Tree(">")
+        tree = new Tree("~")
+        var level1 = new Tree("&")
+        var level2 = new Tree("~")
         // Create sub trees split at the indexes of disjunction we found
         for (var i = 0; i <= all_conjunctions.length; i++) {
             if (i === 0) {
-                tree.subtree.push(convert_to_tree(str.slice(0, all_conjunctions[0])))
+                level1.subtree.push(convert_to_tree(str.slice(0, all_conjunctions[0])))
             } else if (i === all_conjunctions.length) {
-                tree.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, )))
+                level2.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, )))
+                level1.subtree.push(level2)
             } else {
-                tree.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i])))
+                level2.subtree.push(convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i])))
+                level1.subtree.push(level2)
             }
         }
+        tree.subtree.push(level1)
     } else {
         tree = new Tree(str)
     }
