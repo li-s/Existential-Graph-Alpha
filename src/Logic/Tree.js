@@ -15,11 +15,10 @@ const convert_to_tree = (str) => {
        str = str.slice(1,str.length - 1)
     }
 
-    console.log(str)
     // The only time we handle negation is when it is the first symbol
     if (str.toString().indexOf("~") === 0) {
         tree = new Tree("~")
-        tree.subtree.push(convert_to_tree(convert_to_tree(str.slice(1, str.length))))
+        tree.subtree.push(convert_to_tree(str.slice(1, str.length)))
     // Then we handle and by finding all conjunction outside of parenthesis
     } else if (str.toString().includes("&") && index_match("&", str).length > 0) {
         // First get all conjunction outside parenthesis
@@ -70,4 +69,4 @@ const convert_to_tree = (str) => {
     return tree
 }
 
-export default convert_to_tree
+export {convert_to_tree, Tree}

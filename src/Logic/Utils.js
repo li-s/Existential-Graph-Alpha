@@ -29,15 +29,15 @@ const enclosed_parens = (dict) => {
     var ans = []
     var dup_ans = []
     for (const key in dict) {
-        for (var i = key; i < dict[key] + 1; i++) {
+        for (var i = parseInt(key); i < dict[key] + 1; i++) {
             dup_ans.push(i)
         }
     }
 
-    dup_ans.sort()
-    for (const i in dup_ans) {
-        if (!ans.includes(i)) {
-            ans.push(i)
+    dup_ans.sort((a, b) => a - b)
+    for (var i = 0; i < dup_ans.length; i++) {
+        if (!ans.includes(dup_ans[i])) {
+            ans.push(dup_ans[i])
         }
     }
 
@@ -48,7 +48,7 @@ const index_match = (char, str) => {
     var index = []
     var excluded = enclosed_parens(find_parenthesis(str))
     for (var i = 0; i < str.length; i++) {
-        if (str.charAt(i) === char && !excluded.includes(i.toString())) {
+        if (str.charAt(i) === char && !excluded.includes(i)) {
             index.push(i)
         }
     }
