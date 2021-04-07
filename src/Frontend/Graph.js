@@ -4,16 +4,6 @@ import Container from './components/Container'
 import Prop from './components/Prop'
 import './Graph.css'
 
-const GraphHeader = () => {
-    return (
-        <thread>
-            <tr>
-                <th>Graph</th>
-            </tr>
-        </thread>
-    )
-}
-
 class Graph extends Component {
     render() {
         const { tree, handleSelect, handleIterate, handleDeIterate, traversal } = this.props
@@ -91,7 +81,7 @@ class Graph extends Component {
         const GraphBody = (props) => {
             const { tree, handleSelect, handleIterate, traversal } = props
             if (tree) {
-                if (tree.value == "&") {
+                if (tree.value === "&") {
                     var leftTraversal = Array.from(traversal)
                     var rightTraversal = Array.from(traversal)
                     leftTraversal.push(0)
@@ -108,7 +98,7 @@ class Graph extends Component {
                                 traversal={rightTraversal} />
                         </Prop>
                     )
-                } else if (tree.value == "~") {
+                } else if (tree.value === "~") {
                     var downTraversal = Array.from(traversal)
                     downTraversal.push(0)
                     return (

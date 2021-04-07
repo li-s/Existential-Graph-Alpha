@@ -1,16 +1,11 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 
 import Submission from './Submission'
 import Graph from './Graph'
 import parseString from '../Logic/Parser'
-import { convert_to_tree, Tree } from '../Logic/Tree'
+import { convert_to_tree } from '../Logic/Tree'
 import Iteration from '../Logic/Iteration'
 import DeIteration from '../Logic/DeIteration'
-
-const useForceUpdate = () => {
-  const [value, setValue] = useState(0)
-  return () => setValue(value => value + 1)
-}
 
 class App extends Component {
   state = {
@@ -46,7 +41,7 @@ class App extends Component {
   }
 
   render() {
-    const { inputFormula, parsedFormula, mainTree, selectedFormula } = this.state
+    const { inputFormula, parsedFormula, mainTree } = this.state
 
     return (
       <div className="rootPage">

@@ -20,6 +20,10 @@ class Tree {
 const convert_to_tree = (str) => {
     var tree
     var toret = find_parenthesis(str)
+    var childTree = null
+    var level1 = null
+    var level2 = null
+    var level3 = null
 
     if ((0 in toret) && (toret[0] === (str.length - 1))) {
         str = str.slice(1, str.length - 1)
@@ -29,7 +33,7 @@ const convert_to_tree = (str) => {
     if (str.toString().indexOf("~") === 0) {
         tree = new Tree("~")
         Tree.incrementCounter()
-        var childTree = convert_to_tree(str.slice(1, str.length))
+        childTree = convert_to_tree(str.slice(1, str.length))
         childTree.parentID = tree.ID
         tree.subtree.push(childTree)
         // Then we handle and by finding all conjunction outside of parenthesis
@@ -40,7 +44,7 @@ const convert_to_tree = (str) => {
         // Create sub trees split at the indexes of conjunction we found
         for (var i = 0; i <= all_conjunctions.length; i++) {
             Tree.incrementCounter()
-            var childTree
+            childTree = null
             if (i === 0) {
                 childTree = convert_to_tree(str.slice(0, all_conjunctions[0]))
                 childTree.parentID = tree.ID
@@ -60,36 +64,25 @@ const convert_to_tree = (str) => {
         const all_conjunctions = index_match("|", str)
         tree = new Tree("~")
         Tree.incrementCounter()
-        var level1 = new Tree("&")
+        level1 = new Tree("&")
         level1.parentID = tree.ID
         // Create sub trees split at the indexes of disjunction we found
-        for (var i = 0; i <= all_conjunctions.length; i++) {
+        for (var j = 0; j <= all_conjunctions.length; j++) {
             Tree.incrementCounter()
-            if (i === 0) {
-                var level2 = new Tree("~")
-                Tree.incrementCounter()
-                level2.parentID = level1.ID
-                var level3 = convert_to_tree(str.slice(0, all_conjunctions[0]))
-                level3.parentID = level2.ID
-                level2.subtree.push(level3)
-                level1.subtree.push(level2)
-            } else if (i === all_conjunctions.length) {
-                var level2 = new Tree("~")
-                Tree.incrementCounter()
-                level2.parentID = level1.ID
-                var level3 = convert_to_tree(str.slice(all_conjunctions[i - 1] + 1,))
-                level3.parentID = level2.ID
-                level2.subtree.push(level3)
-                level1.subtree.push(level2)
+            level2 = new Tree("~")
+            Tree.incrementCounter()
+            level2.parentID = level1.ID
+            level3 = null
+            if (j === 0) {
+                level3 = convert_to_tree(str.slice(0, all_conjunctions[0]))
+            } else if (j === all_conjunctions.length) {
+                level3 = convert_to_tree(str.slice(all_conjunctions[j - 1] + 1,))
             } else {
-                var level2 = new Tree("~")
-                Tree.incrementCounter()
-                level2.parentID = level1.ID
-                var level3 = convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i]))
-                level3.parentID = level2.ID
-                level2.subtree.push(level3)
-                level1.subtree.push(level2)
+                level3 = convert_to_tree(str.slice(all_conjunctions[j - 1] + 1, all_conjunctions[j]))
             }
+            level3.parentID = level2.ID
+            level2.subtree.push(level3)
+            level1.subtree.push(level2)
         }
         tree.subtree.push(level1)
     } else if (str.toString().includes(">") && index_match(">", str).length > 0) {
@@ -97,25 +90,25 @@ const convert_to_tree = (str) => {
         const all_conjunctions = index_match(">", str)
         tree = new Tree("~")
         Tree.incrementCounter()
-        var level1 = new Tree("&")
+        level1 = new Tree("&")
         level1.parentID = tree.ID
         Tree.incrementCounter()
-        var level2 = new Tree("~")
+        level2 = new Tree("~")
         level2.parentID = level1.ID
         // Create sub trees split at the indexes of disjunction we found
-        for (var i = 0; i <= all_conjunctions.length; i++) {
+        for (var k = 0; k <= all_conjunctions.length; k++) {
             Tree.incrementCounter()
-            if (i === 0) {
-                var level3 = convert_to_tree(str.slice(0, all_conjunctions[0]))
+            if (k === 0) {
+                level3 = convert_to_tree(str.slice(0, all_conjunctions[0]))
                 level3.parentID = level2.ID
                 level1.subtree.push(level3)
-            } else if (i === all_conjunctions.length) {
-                var level3 = convert_to_tree(str.slice(all_conjunctions[i - 1] + 1,))
+            } else if (k === all_conjunctions.length) {
+                level3 = convert_to_tree(str.slice(all_conjunctions[k - 1] + 1,))
                 level3.parentID = level2.ID
                 level2.subtree.push(level3)
                 level1.subtree.push(level2)
             } else {
-                var level3 = convert_to_tree(str.slice(all_conjunctions[i - 1] + 1, all_conjunctions[i]))
+                level3 = convert_to_tree(str.slice(all_conjunctions[k - 1] + 1, all_conjunctions[k]))
                 level3.parentID = level2.ID
                 level2.subtree.push(level3)
                 level1.subtree.push(level2)
@@ -136,7 +129,7 @@ const CheckSubtree = (traversal, traversalSubTree) => {
         return false
     }
     for (var i = 0; i < traversal.length - 1; i++) {
-        if (traversal[i] != traversalSubTree[i]) {
+        if (traversal[i] !== traversalSubTree[i]) {
             return false
         }
     }
@@ -152,9 +145,9 @@ const tree_copy = (tree) => {
     var node
     Tree.incrementCounter()
 
-    if (tree.value == "&") {
+    if (tree.value === "&") {
         node = new Tree("&")
-    } else if (tree.value == "~") {
+    } else if (tree.value === "~") {
         node = new Tree("~")
     } else {
         node = new Tree(tree.value)

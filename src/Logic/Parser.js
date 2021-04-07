@@ -80,16 +80,18 @@ const remove_imply = (str) => {
 const remove_iff = (str) => {
     var ans = []    
     for (var i = 0; i < str.length; i++) {
+        var left
+        var right
         if (i > 1 && str.charAt(i) === "f" && str.charAt(i - 1) === "f" && str.charAt(i - 2) === "i") {
             ans = ans.slice(0, ans.length - 2)
-            var left = remove_iff(ans.join(""))
-            var right = remove_iff(str.split("").slice(i + 1, str.length).join(""))
+            left = remove_iff(ans.join(""))
+            right = remove_iff(str.split("").slice(i + 1, str.length).join(""))
             ans = ("((" + left + ")>(" + right + "))&((" + right + ")>(" + left + "))").split("")
             break
         } else if (i > 1 && str.charAt(i) === ">" && str.charAt(i - 1) === "-" && str.charAt(i - 2) === "<") {
             ans = ans.slice(0, ans.length - 2)
-            var left = remove_iff(ans.join(""))
-            var right = remove_iff(str.split("").slice(i + 1, str.length).join(""))
+            left = remove_iff(ans.join(""))
+            right = remove_iff(str.split("").slice(i + 1, str.length).join(""))
             ans = ("((" + left + ")>(" + right + "))&((" + right + ")>(" + left + "))").split("")
             break
         } else {
