@@ -6,7 +6,8 @@ import './Graph.css'
 
 class Graph extends Component {
     render() {
-        const { tree, handleSelect, handleIterate, handleDeIterate, handleErasure, traversal } = this.props
+        const { tree, handleSelect, handleIterate, handleDeIterate, handleErasure,
+            handleDoubleCutAround, removeDoubleCut, traversal } = this.props
         //console.log("tree = ", tree)
         //console.log("traversal = ", traversal)
 
@@ -33,6 +34,12 @@ class Graph extends Component {
                     handleDeIterate({ tree, traversal })
                 }
             },
+            {
+                text: "Insert double cut around prop",
+                onClick: () => {
+                    handleDoubleCutAround({ tree, traversal })
+                }
+            },
         ]
 
         const and = [
@@ -57,6 +64,12 @@ class Graph extends Component {
                 text: 'Deiterate selected from here',
                 onClick: () => {
                     handleDeIterate({ tree, traversal })
+                }
+            },
+            {
+                text: "Insert double cut around conjunction",
+                onClick: () => {
+                    handleDoubleCutAround({ tree, traversal })
                 }
             },
         ]
@@ -90,6 +103,18 @@ class Graph extends Component {
                     handleDeIterate({ tree, traversal })
                 }
             },
+            {
+                text: "Insert double cut around negation",
+                onClick: () => {
+                    handleDoubleCutAround({ tree, traversal })
+                }
+            },
+            {
+                text: "Remove double cut",
+                onClick: () => {
+                    removeDoubleCut({ tree, traversal })
+                }
+            }
         ]
 
         const GraphBody = (props) => {
@@ -106,11 +131,15 @@ class Graph extends Component {
                                 handleIterate={handleIterate}
                                 handleDeIterate={handleDeIterate}
                                 handleErasure={handleErasure}
+                                handleDoubleCutAround={handleDoubleCutAround}
+                                removeDoubleCut={removeDoubleCut}
                                 traversal={leftTraversal} />
                             <Graph tree={tree.subtree[1]} handleSelect={handleSelect}
                                 handleIterate={handleIterate}
                                 handleDeIterate={handleDeIterate}
                                 handleErasure={handleErasure}
+                                handleDoubleCutAround={handleDoubleCutAround}
+                                removeDoubleCut={removeDoubleCut}
                                 traversal={rightTraversal} />
                         </Prop>
                     )
@@ -123,6 +152,8 @@ class Graph extends Component {
                                 handleIterate={handleIterate}
                                 handleDeIterate={handleDeIterate}
                                 handleErasure={handleErasure}
+                                handleDoubleCutAround={handleDoubleCutAround}
+                                removeDoubleCut={removeDoubleCut}
                                 traversal={downTraversal} />
                         </Container>
                     )
@@ -143,8 +174,10 @@ class Graph extends Component {
 
         return (
             <GraphBody tree={tree} handleSelect={handleSelect} handleIterate={handleIterate}
-                handleDeIterate={handleDeIterate} 
+                handleDeIterate={handleDeIterate}
                 handleErasure={handleErasure}
+                handleDoubleCutAround={handleDoubleCutAround}
+                removeDoubleCut={removeDoubleCut}
                 traversal={traversal} />
         )
     }

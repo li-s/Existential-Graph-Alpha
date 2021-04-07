@@ -1,12 +1,11 @@
-import { Tree, tree_copy, CheckSubtree, check_even_cut } from "./Tree"
+import { check_even_cut } from "./Tree"
 
-const Erasure = ({ mainTree, tree, traversal }) => {
+const Erasure = ({ mainTree, traversal }) => {
     // Check if even depth
     if (!check_even_cut(mainTree, traversal)) {
-        console.log("not even depth")
+        console.log("Not even depth")
         return
     }
-    console.log(check_even_cut(mainTree, traversal))
 
     // Delete the sub tree
     var node = mainTree
