@@ -16,7 +16,7 @@ const GraphHeader = () => {
 
 class Graph extends Component {
     render() {
-        const { tree, handleSelect, traversal } = this.props
+        const { tree, handleSelect, handleIterate, traversal } = this.props
         //console.log("tree = ", tree)
         //console.log("traversal = ", traversal)
 
@@ -25,13 +25,6 @@ class Graph extends Component {
                 text: 'select',
                 onClick: () => {
                     handleSelect({ tree, traversal })
-                }
-            },
-            {
-                text: 'Iteration',
-                onClick: () => {
-                    console.log('Iteration!')
-                    console.log(tree)
                 }
             },
             {
@@ -72,8 +65,11 @@ class Graph extends Component {
                 }
             },
             {
-                text: 'Insert Double Cut around',
-                onClick: () => { console.log('Insert Double Cut!') }
+                text: 'Iteration',
+                onClick: () => {
+                    console.log('Iteration!')
+                    handleIterate({ tree, traversal })
+                }
             },
             {
                 text: "not",
@@ -82,7 +78,7 @@ class Graph extends Component {
         ]
 
         const GraphBody = (props) => {
-            const { tree, handleSelect, traversal } = props
+            const { tree, handleSelect, handleIterate, traversal } = props
             if (tree) {
                 if (tree.value == "&") {
                     var leftTraversal = Array.from(traversal)
@@ -90,9 +86,9 @@ class Graph extends Component {
                     leftTraversal.push(0)
                     rightTraversal.push(1)
                     return (
-                        <Prop menuItems={and} tree={tree} handleSelect={handleSelect} traversal={traversal}>
-                            <Graph tree={tree.subtree[0]} handleSelect={handleSelect} traversal={leftTraversal} />
-                            <Graph tree={tree.subtree[1]} handleSelect={handleSelect} traversal={rightTraversal} />
+                        <Prop menuItems={and} tree={tree} handleSelect={handleSelect} handleIterate={handleIterate} traversal={traversal}>
+                            <Graph tree={tree.subtree[0]} handleSelect={handleSelect} handleIterate={handleIterate} traversal={leftTraversal} />
+                            <Graph tree={tree.subtree[1]} handleSelect={handleSelect} handleIterate={handleIterate} traversal={rightTraversal} />
                         </Prop>
                     )
                 } else if (tree.value == "~") {
@@ -100,7 +96,7 @@ class Graph extends Component {
                     downTraversal.push(0)
                     return (
                         <Container menuItems={not} >
-                            <Graph tree={tree.subtree[0]} handleSelect={handleSelect} traversal={downTraversal} />
+                            <Graph tree={tree.subtree[0]} handleSelect={handleSelect} handleIterate={handleIterate} traversal={downTraversal} />
                         </Container>
                     )
                 } else {
@@ -119,7 +115,7 @@ class Graph extends Component {
         }
 
         return (
-            <GraphBody tree={tree} handleSelect={handleSelect} traversal={traversal} />
+            <GraphBody tree={tree} handleSelect={handleSelect} handleIterate={handleIterate} traversal={traversal} />
         )
     }
 }
