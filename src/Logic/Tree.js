@@ -129,6 +129,21 @@ const convert_to_tree = (str) => {
     return tree
 }
 
+const CheckSubtree = (traversal, traversalSubTree) => {
+    // traversal.length <= traversalSubTree.length
+    // For it to be a subtree
+    if (traversal.length - 1 > traversalSubTree.length - 1) {
+        return false
+    }
+    for (var i = 0; i < traversal.length - 1; i++) {
+        if (traversal[i] != traversalSubTree[i]) {
+            return false
+        }
+    }
+
+    return true
+}
+
 const tree_copy = (tree) => {
     if (!tree) {
         return
@@ -136,7 +151,7 @@ const tree_copy = (tree) => {
 
     var node
     Tree.incrementCounter()
-    
+
     if (tree.value == "&") {
         node = new Tree("&")
     } else if (tree.value == "~") {
@@ -152,4 +167,24 @@ const tree_copy = (tree) => {
     return node
 }
 
-export { convert_to_tree, Tree, tree_copy }
+const check_equals = (tree1, tree2) => {
+    if (!tree1 && !tree2) {
+        return true
+    } else if (!tree1 || !tree2) {
+        return false
+    }
+
+    if ((tree1.value === tree2.value) && (tree1.subtree.length === tree2.subtree.length)) {
+        for (var i = 0; i < tree1.subtree.length; i++) {
+            if (!check_equals(tree1.subtree[i], tree2.subtree[i])) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    return false
+}
+
+export { convert_to_tree, Tree, tree_copy, CheckSubtree, check_equals }

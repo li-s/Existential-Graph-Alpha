@@ -5,6 +5,7 @@ import Graph from './Graph'
 import parseString from '../Logic/Parser'
 import { convert_to_tree, Tree } from '../Logic/Tree'
 import Iteration from '../Logic/Iteration'
+import DeIteration from '../Logic/DeIteration'
 
 const useForceUpdate = () => {
   const [value, setValue] = useState(0)
@@ -33,9 +34,15 @@ class App extends Component {
   }
 
   handleIterate = ({ tree, traversal }) => {
-    const {mainTree, selectedFormula, selectedFormulaTraversal} = this.state
-    Iteration({mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal})
-    this.setState({mainTree : mainTree})
+    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
+    Iteration({ selectedFormula, tree, selectedFormulaTraversal, traversal })
+    this.setState({ mainTree: mainTree })
+  }
+
+  handleDeIterate = ({ tree, traversal }) => {
+    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
+    DeIteration({ mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal })
+    this.setState({ mainTree: mainTree })
   }
 
   render() {
@@ -45,7 +52,8 @@ class App extends Component {
       <div className="rootPage">
         <p>Your input: {inputFormula}</p>
         <p>Your formula: {parsedFormula}</p>
-        <Graph tree={mainTree} handleSelect={this.handleSelect} handleIterate={this.handleIterate} traversal={[]} />
+        <Graph tree={mainTree} handleSelect={this.handleSelect} handleIterate={this.handleIterate} 
+          handleDeIterate={this.handleDeIterate} traversal={[]} />
         <Submission handleSubmit={this.handleSubmit} />
         <button onClick={this.useForceUpdate}>
           click to re-render
