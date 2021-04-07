@@ -180,4 +180,24 @@ const check_equals = (tree1, tree2) => {
     return false
 }
 
-export { convert_to_tree, Tree, tree_copy, CheckSubtree, check_equals }
+const check_even_cut = (tree, traversal) => {
+    var cutSeen = 0
+    if (traversal.length === 0 || !tree) {
+        return true
+    }
+
+    var node = tree
+    for (var i = 0; i < traversal.length; i++) {
+        if (node.value === "~") {
+            cutSeen += 1
+        }
+        node = node.subtree[traversal[i]]
+    }
+    console.log(cutSeen)
+    var aaa = cutSeen % 2 === 0
+    console.log(aaa)
+
+    return cutSeen % 2 === 0
+}
+
+export { convert_to_tree, Tree, tree_copy, CheckSubtree, check_equals, check_even_cut }
