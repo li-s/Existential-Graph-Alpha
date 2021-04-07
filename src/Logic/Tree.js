@@ -193,9 +193,6 @@ const check_even_cut = (tree, traversal) => {
         }
         node = node.subtree[traversal[i]]
     }
-    console.log(cutSeen)
-    var aaa = cutSeen % 2 === 0
-    console.log(aaa)
 
     return cutSeen % 2 === 0
 }
