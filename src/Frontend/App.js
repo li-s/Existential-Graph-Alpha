@@ -6,9 +6,10 @@ import parseString from '../Logic/Parser'
 import { convert_to_tree } from '../Logic/Tree'
 import Iteration from '../Logic/Iteration'
 import DeIteration from '../Logic/DeIteration'
-import DoubleCut from '../Logic/DoubleCut'
+import DoubleCutAround from '../Logic/DoubleCutAround'
 import Erasure from '../Logic/Erasure'
 import Insertion from '../Logic/Insertion'
+import RemoveDoubleCut from '../Logic/RemoveDoubleCut'
 
 class App extends Component {
   state = {
@@ -43,9 +44,15 @@ class App extends Component {
     this.setState({ mainTree: mainTree })
   }
 
-  handleDoubleCut = ({ tree, traversal }) => {
-    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
-    DoubleCut({ mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal })
+  handleDoubleCutAround = ({ tree, traversal }) => {
+    const { mainTree } = this.state
+    DoubleCutAround({ mainTree, tree, traversal })
+    this.setState({ mainTree: mainTree })
+  }
+
+  removeDoubleCut = ({ tree, traversal }) => {
+    const { mainTree } = this.state
+    RemoveDoubleCut({ mainTree, tree, traversal })
     this.setState({ mainTree: mainTree })
   }
 
@@ -57,7 +64,7 @@ class App extends Component {
 
   handleErasure = ({ tree, traversal }) => {
     const { mainTree } = this.state
-    Erasure({ mainTree, tree, traversal })
+    Erasure({ mainTree, traversal })
     this.setState({ mainTree: mainTree })
   }
 
@@ -71,13 +78,19 @@ class App extends Component {
         <p>Graph</p>
         <Graph tree={mainTree} handleSelect={this.handleSelect} handleIterate={this.handleIterate}
           handleDeIterate={this.handleDeIterate}
-          handleErasure={this.handleErasure} traversal={[]} />
+          handleErasure={this.handleErasure}
+          handleDoubleCutAround={this.handleDoubleCutAround}
+          removeDoubleCut={this.removeDoubleCut}
+          traversal={[]} />
 
         <p></p>
         <p>Selected Graph</p>
         <Graph tree={selectedFormula} handleSelect={this.handleSelect} handleIterate={this.handleIterate}
           handleDeIterate={this.handleDeIterate}
-          handleErasure={this.handleErasure} traversal={[]} />
+          handleErasure={this.handleErasure}
+          handleDoubleCutAround={this.handleDoubleCutAround}
+          removeDoubleCut={this.removeDoubleCut}
+          traversal={[]} />
 
         <p></p>
         <Submission handleSubmit={this.handleSubmit} />
