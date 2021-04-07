@@ -1,6 +1,8 @@
 .prop {
     width: flex;
     height: flex;
+    min-width: 20px;
+    min-height: 20px;
     background-color: white;
     border: 1px solid white;
     display: flex;

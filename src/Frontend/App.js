@@ -6,6 +6,9 @@ import parseString from '../Logic/Parser'
 import { convert_to_tree } from '../Logic/Tree'
 import Iteration from '../Logic/Iteration'
 import DeIteration from '../Logic/DeIteration'
+import DoubleCut from '../Logic/DoubleCut'
+import Erasure from '../Logic/Erasure'
+import Insertion from '../Logic/Insertion'
 
 class App extends Component {
   state = {
@@ -40,15 +43,43 @@ class App extends Component {
     this.setState({ mainTree: mainTree })
   }
 
+  handleDoubleCut = ({ tree, traversal }) => {
+    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
+    DoubleCut({ mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal })
+    this.setState({ mainTree: mainTree })
+  }
+
+  handleInsertion = ({ tree, traversal }) => {
+    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
+    Insertion({ mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal })
+    this.setState({ mainTree: mainTree })
+  }
+
+  handleErasure = ({ tree, traversal }) => {
+    const { mainTree } = this.state
+    Erasure({ mainTree, tree, traversal })
+    this.setState({ mainTree: mainTree })
+  }
+
   render() {
-    const { inputFormula, parsedFormula, mainTree } = this.state
+    const { inputFormula, parsedFormula, mainTree, selectedFormula } = this.state
 
     return (
       <div className="rootPage">
         <p>Your input: {inputFormula}</p>
         <p>Your formula: {parsedFormula}</p>
-        <Graph tree={mainTree} handleSelect={this.handleSelect} handleIterate={this.handleIterate} 
-          handleDeIterate={this.handleDeIterate} traversal={[]} />
+        <p>Graph</p>
+        <Graph tree={mainTree} handleSelect={this.handleSelect} handleIterate={this.handleIterate}
+          handleDeIterate={this.handleDeIterate}
+          handleErasure={this.handleErasure} traversal={[]} />
+
+        <p></p>
+        <p>Selected Graph</p>
+        <Graph tree={selectedFormula} handleSelect={this.handleSelect} handleIterate={this.handleIterate}
+          handleDeIterate={this.handleDeIterate}
+          handleErasure={this.handleErasure} traversal={[]} />
+
+        <p></p>
         <Submission handleSubmit={this.handleSubmit} />
         <button onClick={this.useForceUpdate}>
           click to re-render
