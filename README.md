@@ -1,8 +1,24 @@
 # Specification
 
 1. Iteration:
-    1.1 Right click and select graph to be copied
-    1.2 Right click destination and select Iterate
+    1.1 Right click graph to be copied and select `select`
+    1.2 Right click destination and select `Iterate`
+2. Deiteration:
+    2.1 Right click graph and select `select`
+    2.2 Right click sub graph and select `Deiterate`
+3. Erasure:
+    3.1 Right click graph and select `erasure`
+4. Insertion:
+    4.1 Input a formula into insertion box, and click `submit`
+    4.2 Right click graph to be inserted into and select `Insert`
+5. DoubleCut:
+    5.1 Insert double cut:
+        5.1.1 Right click graph
+            5.1.1.1 select `Double cut around`
+            or 
+            5.1.1.2 select `Insert double cut ___`
+    5.2 Remove double cut:
+        5.2.1 Right click cut containing another cut select `Remove double cut`
 
 # Getting Started with Create React App
 
