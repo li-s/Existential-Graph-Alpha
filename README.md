@@ -1,3 +1,9 @@
+# Specification
+
+1. Iteration:
+    1.1 Right click and select graph to be copied
+    1.2 Right click destination and select Iterate
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
