@@ -7,7 +7,7 @@ import './Graph.css'
 class Graph extends Component {
     render() {
         const { tree, handleSelect, handleIterate, handleDeIterate, handleErasure,
-            handleDoubleCutAround, removeDoubleCut, traversal } = this.props
+            handleDoubleCutAround, removeDoubleCut, handleInsertion, traversal } = this.props
         //console.log("tree = ", tree)
         //console.log("traversal = ", traversal)
 
@@ -40,6 +40,12 @@ class Graph extends Component {
                     handleDoubleCutAround({ tree, traversal })
                 }
             },
+            {
+                text: "Insert formula here",
+                onClick: () => {
+                    handleInsertion({ tree, traversal })
+                }
+            },
         ]
 
         const and = [
@@ -70,6 +76,12 @@ class Graph extends Component {
                 text: "Insert double cut around conjunction",
                 onClick: () => {
                     handleDoubleCutAround({ tree, traversal })
+                }
+            },
+            {
+                text: "Insert formula here",
+                onClick: () => {
+                    handleInsertion({ tree, traversal })
                 }
             },
         ]
@@ -114,7 +126,13 @@ class Graph extends Component {
                 onClick: () => {
                     removeDoubleCut({ tree, traversal })
                 }
-            }
+            },
+            {
+                text: "Insert formula here",
+                onClick: () => {
+                    handleInsertion({ tree, traversal })
+                }
+            },
         ]
 
         const GraphBody = (props) => {
@@ -133,6 +151,7 @@ class Graph extends Component {
                                 handleErasure={handleErasure}
                                 handleDoubleCutAround={handleDoubleCutAround}
                                 removeDoubleCut={removeDoubleCut}
+                                handleInsertion={handleInsertion}
                                 traversal={leftTraversal} />
                             <Graph tree={tree.subtree[1]} handleSelect={handleSelect}
                                 handleIterate={handleIterate}
@@ -140,6 +159,7 @@ class Graph extends Component {
                                 handleErasure={handleErasure}
                                 handleDoubleCutAround={handleDoubleCutAround}
                                 removeDoubleCut={removeDoubleCut}
+                                handleInsertion={handleInsertion}
                                 traversal={rightTraversal} />
                         </Prop>
                     )
@@ -154,6 +174,7 @@ class Graph extends Component {
                                 handleErasure={handleErasure}
                                 handleDoubleCutAround={handleDoubleCutAround}
                                 removeDoubleCut={removeDoubleCut}
+                                handleInsertion={handleInsertion}
                                 traversal={downTraversal} />
                         </Container>
                     )
@@ -178,6 +199,7 @@ class Graph extends Component {
                 handleErasure={handleErasure}
                 handleDoubleCutAround={handleDoubleCutAround}
                 removeDoubleCut={removeDoubleCut}
+                handleInsertion={handleInsertion}
                 traversal={traversal} />
         )
     }

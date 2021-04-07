@@ -25,7 +25,7 @@ class Submission extends Component {
 
         return (
             <form>
-                <label htmlFor="formula">Formula:</label>
+                <label htmlFor="formula">{this.props.text}</label>
                     <input
                     type="text"
                     name="formula"

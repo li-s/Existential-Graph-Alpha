@@ -18,10 +18,10 @@ class App extends Component {
     mainTree: null,
     selectedFormula: null,
     selectedFormulaTraversal: null,
+    formulaToInsert: null
   }
 
-  handleSubmit = (form) => {
-    const { formula } = form
+  handleSubmit = ({ formula }) => {
     this.setState({ inputFormula: formula })
     this.setState({ parsedFormula: parseString(formula) })
     this.setState({ mainTree: convert_to_tree(parseString(formula)) })
@@ -57,8 +57,8 @@ class App extends Component {
   }
 
   handleInsertion = ({ tree, traversal }) => {
-    const { mainTree, selectedFormula, selectedFormulaTraversal } = this.state
-    Insertion({ mainTree, selectedFormula, tree, selectedFormulaTraversal, traversal })
+    const { mainTree, formulaToInsert } = this.state
+    Insertion({ mainTree, tree, traversal, formulaToInsert })
     this.setState({ mainTree: mainTree })
   }
 
@@ -66,6 +66,10 @@ class App extends Component {
     const { mainTree } = this.state
     Erasure({ mainTree, traversal })
     this.setState({ mainTree: mainTree })
+  }
+
+  inputFormulaToInsert = ({ formula }) => {
+    this.setState({ formulaToInsert: convert_to_tree(parseString(formula)) })
   }
 
   render() {
@@ -81,6 +85,7 @@ class App extends Component {
           handleErasure={this.handleErasure}
           handleDoubleCutAround={this.handleDoubleCutAround}
           removeDoubleCut={this.removeDoubleCut}
+          handleInsertion={this.handleInsertion}
           traversal={[]} />
 
         <p></p>
@@ -90,13 +95,12 @@ class App extends Component {
           handleErasure={this.handleErasure}
           handleDoubleCutAround={this.handleDoubleCutAround}
           removeDoubleCut={this.removeDoubleCut}
+          handleInsertion={this.handleInsertion}
           traversal={[]} />
 
         <p></p>
-        <Submission handleSubmit={this.handleSubmit} />
-        <button onClick={this.useForceUpdate}>
-          click to re-render
-        </button>
+        <Submission handleSubmit={this.handleSubmit} text={"Formula:"} />
+        <Submission handleSubmit={this.inputFormulaToInsert} text={"Formula to insert:"} />
       </div>
     )
   }
